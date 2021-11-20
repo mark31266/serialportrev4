@@ -1,0 +1,19 @@
+{
+  "name": "serialport4",
+  "version": "4.0.0",
+  "description": "rev. 4",
+  "main": "index.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mark31266/serialport4.git"
+  },
+  "author": "Mark Montenegro | Ed Rodriguez | Heinrich Macabasco | Renz Silvestre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mark31266/serialport4/issues"
+  },
+  "homepage": "https://github.com/mark31266/serialport4#readme"
+}
