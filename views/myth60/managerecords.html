@@ -28,16 +28,22 @@
         <!-- Sidebar Holder -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h2><b>LabX</b></h2>
+              <a href="/home">
+                <div id="add1" style="padding-left:15%;"><img class="img" src="/images/LabX.png" width="144" height="136">
+                </div>
+              </a>
             </div>
             <ul class="list-unstyled components">
               <p class="search" id="machinename" style="font-size:22px;">Orphee Mythic 60</p>
               <li >
-                <a href="/myth22/home">Main Dashboard</a>
+                <a href="/home">Main Dashboard</a>
             </li>
             <li>
-                <a href="/myth60/run">Run Samples</a>
-            </li>
+              <a href="#homeSubmenu1"  data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Run Samples</a>
+              <ul class="collapse list-unstyled show" id="homeSubmenu1">
+               
+            </ul>
+          </li>
             <li class="active">
               <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Manage Records</a>
               <ul class="collapse list-unstyled" id="homeSubmenu">
@@ -53,10 +59,10 @@
             </ul>
             </li>
             <li>
-              <a href="/myth22/about">Contact Us</a>
+              <a href="/about">Contact Us</a>
           </li>
             <li>
-              <a href="/myth22/settings">Settings</a>
+              <a href="/settings">Settings</a>
           </li>
           </ul>
       </nav>
@@ -92,11 +98,8 @@
         </nav>
         <div id="container" class="container">
           <div class="header">
-              <div class="header image"><img src="/images/clinic.png" width="155px" height="155px"></div>
-          <div class="company"> <h3>BATANGAS CLINICAL LABORATORY</h3></div>
-         <div class="address"> <h4>Ramos Building, 32  D. Silang St., Batangas City</h4></div>
-         <div class="contact"> <h4>Tel. Nos. 04-980-5076/043-722-2473</h4></div>
-         <div class="title"> <h3>HEMATOLOGY REPORT</h3></div>
+            <div class="logo image"><img id="logo1" width="155px" height="155px"></div>
+            <div class="header image"><img id="header1" width="550px" height="180px"></div>
           </div>
         </div>
       <div class="container">
@@ -126,7 +129,7 @@
           <th  id="trd" class="w-30" style="text-align:left">Test Run Date:<th class="no-gutters" style="text-align:left">
             <div class="dropdown bootstrap-select fit-width show"></div>
             <select class="selectpicker select-dte" id= "dateselect1" onchange="sidfunction()" data-size="4" data-live-search="true" data-width="85%">
-            <option disabled selected value>Select an Option</option>
+              <option disabled selected value>Select an Option</option>
            
             </select></div>
           </div></th></th></div>
@@ -366,7 +369,7 @@
           
           <div class="row">
             <div class="col-pl-3"><svg id="barcode2"></svg></div>
-            <div class="col-md-2"><div id="signatories"><img src="/images/signatories.png" width="730px" height="118px"></div>
+            <div class="col-md-2"><div id="signatories"><img id="signatories1" width="730px" height="118px"></div>
             </div>
             </div>
 

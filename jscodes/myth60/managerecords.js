@@ -19,15 +19,65 @@ firebase.auth().onAuthStateChanged(function(user) {
   username = user.email;
 })
 var clicks = 0;
-
+var socket = io();
+socket.on('status', function(status) {
+  console.log(status);
+  if (String(status).includes("COM1") ){
+   machinename = "Orphee Mythic 22"; 
+     //SelectPicker Nav
+   const navobj = document.createElement("li");
+   const navobj2 = document.createElement("a");
+   navobj2.textContent = "Mythic 22";
+   navobj2.href = "/myth22/run"; 
+   navobj.appendChild(navobj2)
+   document.getElementById("homeSubmenu1").appendChild(navobj);
+  }
+  if (String(status).includes("COM2") ){
+    machinename = "Orphee Mythic 18"; 
+    const navobj = document.createElement("li");
+    const navobj2 = document.createElement("a");
+    navobj2.textContent = "Mythic 18";
+    navobj2.href = "/myth18/run"; 
+    navobj.appendChild(navobj2)
+    document.getElementById("homeSubmenu1").appendChild(navobj);
+   }
+   if (String(status).includes("COM3") ){
+    machinename = "Orphee Mythic 60"; 
+    const navobj = document.createElement("li");
+    const navobj2 = document.createElement("a");
+    navobj2.textContent = "Mythic 22";
+    navobj2.href = "/myth60/run"; 
+    navobj.appendChild(navobj2)
+    document.getElementById("homeSubmenu1").appendChild(navobj);
+   }
+  socket.close();
+});
 //--------------writing data---------------------//
 document.getElementById("submitdata").addEventListener("click", function(event) {
      //--------------ID data---------------------//
-  var date1 = document.getElementById("dateselect1").value; 
+     db.collection("DateSetting").doc("Format").get().then((doc) => {
+      var format2 = doc.data().format; 
+     if (format2 == "mm-dd-yyyy") 
+    {
+      var date1 = document.getElementById("dateselect1").value.replace(/(\d*)-(\d*)-(\d*)/,'$2-$1-$3');
+    }
+    if (format2 == "dd-mm-yyyy") 
+    {
+      var date1 = document.getElementById("dateselect1").value.replace(/(\d*)-(\d*)-(\d*)/,'$1-$2-$3');
+    }
+    if (format2 == "yyyy-dd-mm") 
+    {
+    var date1 = document.getElementById("dateselect1").value.replace(/(\d*)-(\d*)-(\d*)/,'$2-$3-$1')
+    }
+    if (format2 == "yyyy-mm-dd") 
+    {
+    var date1 = document.getElementById("dateselect1").value.replace(/(\d*)-(\d*)-(\d*)/,'$3-$2-$1')
+    }
+
   var sid1 = document.getElementById("sidselect").value; 
 
 
-  db.collection("patientvalues").doc(username).collection("DATE").doc(date1).collection("SID").doc(sid1).collection("DATA")
+  db.collection("patientvalues").doc(username + " Mythic 60").collection("DATE").doc(date1).collection("SID").doc(sid1).collection("DATA")
   .get()  
   .then((snapshot) => {
     snapshot.docs.forEach(doc => {
@@ -35,6 +85,7 @@ document.getElementById("submitdata").addEventListener("click", function(event) 
    
  
     })
+})
 })
     //-----------------Tables--------------------/
 const fn = document.querySelector('#fname1');
@@ -125,7 +176,7 @@ function renderAccount(doc){
        let tr_blood = document.getElementById('bloodtype');
        let th_blood = document.createElement('td');
      event.stopPropagation; 
-     
+
      //-----------------First and Last Name Get Data--------------------/
      trfn.value = doc.data().FirstName; 
      trln.value = doc.data().LastName; 
@@ -195,7 +246,7 @@ function renderAccount(doc){
         }
         else 
         {
-         th_neu.textContent = neua; 
+         th_neu.innerHTML = neua; 
         }
         tr_neu.appendChild(th_neu);
         results1.appendChild(tr_neu);
@@ -220,7 +271,7 @@ function renderAccount(doc){
          }
          else 
          {
-          th_lym.textContent = lyma; 
+          th_lym.innerHTML = lyma; 
          }
        tr_lym.appendChild(th_lym);
        results1.appendChild(tr_lym);
@@ -275,7 +326,7 @@ function renderAccount(doc){
          }
          else 
          {
-          th_eos.textContent = eosa; 
+          th_eos.innerHTML = eosa; 
          }
        tr_eos.appendChild(th_eos);
        results1.appendChild(tr_eos);
@@ -303,7 +354,7 @@ function renderAccount(doc){
            }
            else 
            {
-            th_bas.innerText = basa; 
+            th_bas.innerHTML = basa; 
            }
         tr_bas.appendChild(th_bas);
         results1.appendChild(tr_bas);
@@ -387,7 +438,7 @@ function renderAccount(doc){
          }
          else 
          {
-          th_hct.innerHTML += + hcta 
+          th_hct.innerHTML += hcta 
          }
       tr_hct.appendChild(th_hct);
       results1.appendChild(tr_hct);
@@ -414,7 +465,7 @@ function renderAccount(doc){
          }
          else 
          {
-          th_mcv.textContent = mcva; 
+          th_mcv.innerHTML = mcva; 
          }
       tr_mcv.appendChild(th_mcv);
       results1.appendChild(tr_mcv);
@@ -441,7 +492,7 @@ function renderAccount(doc){
          }
          else 
          {
-          th_mch.textContent = mcha; 
+          th_mch.innerHTML = mcha; 
          }
       tr_mch.appendChild(th_mch);
       results1.appendChild(tr_mch);
@@ -468,7 +519,7 @@ function renderAccount(doc){
          }
          else 
          {
-          th_mchc.textContent = mchca; 
+          th_mchc.innerHTML = mchca; 
          }
       tr_mchc.appendChild(th_mchc);
       results1.appendChild(tr_mchc);
@@ -512,7 +563,7 @@ function renderAccount(doc){
  
      if (ad  == undefined)
      {
-      th_blood.innerText = " "; 
+      th_blood.innerHTML = " "; 
      }
      else
      {
@@ -575,7 +626,7 @@ function updatefunction()
   Machine : machinename,
   DateDid : date2.innerText + " " + clock1.innerText 
   })
-  db.collection("patientvalues").doc(username).collection("DATE").doc(date1).collection("SID").doc(sid1).collection("DATA").get().then(function(querySnapshot) 
+  db.collection("patientvalues").doc(username + " Mythic 60").collection("DATE").doc(date1).collection("SID").doc(sid1).collection("DATA").get().then(function(querySnapshot) 
   {
     querySnapshot.forEach(function(doc) {
         doc.ref.update({
@@ -595,9 +646,21 @@ function updatefunction()
 }
 function deletefunction() 
 {
-  var date1 = document.getElementById("dateselect").value; 
+  var date1 = document.getElementById("dateselect1").value; 
   var sid1 = document.getElementById("sidselect").value; 
-  db.collection("patientvalues").doc(username).collection("DATE").doc(date1).collection("SID").doc(sid1).delete().then(() => {
+ var date2 = document.getElementById("date1");  
+ var clock1 = document.getElementById("clock");  
+ var machinename = document.getElementById("machinename").innerHTML;  
+ db.collection("auditlog").doc(date2.innerText + " " + clock1.innerText).set(
+  {
+  id : username,
+  SID : sid1,
+  Test_Run_Date : date1,
+  Activity : "Delete",
+  Machine : machinename,
+  DateDid : date2.innerText + " " + clock1.innerText 
+  })
+  db.collection("patientvalues").doc(username + " Mythic 60").collection("DATE").doc(date1).collection("SID").doc(sid1).delete().then(() => {
     window.location.reload(); 
 }).catch((error) => {
     alert("Error removing document: ", error);
@@ -605,37 +668,100 @@ function deletefunction()
 
 }
 function myFunction3(){
-firebase.firestore().enablePersistence()
-.catch((err) => {
-    if (err.code == 'failed-precondition') {
-        // Multiple tabs open, persistence can o-nly be enabled
-        // in one tab at a a time.
-        console.log(err)
-        // ...
-    } else if (err.code == 'unimplemented') {
-        // The current browser does not support all of the
-        // features required to enable persistence
-        // ...
-        console.log(err)
+// firebase.firestore().enablePersistence()
+// .catch((err) => {
+//     if (err.code == 'failed-precondition') {
+//         // Multiple tabs open, persistence can o-nly be enabled
+//         // in one tab at a a time.
+//         console.log(err)
+//         // ...
+//     } else if (err.code == 'unimplemented') {
+//         // The current browser does not support all of the
+//         // features required to enable persistence
+//         // ...
+//         console.log(err)
+//     }
+//     else{
+//       console.log("yey")
+//     }
+// });
+       //-----------------Photos Get Data--------------------/
+       var myimg = document.getElementById("signatories1"); 
+       var myimg2 = document.getElementById("logo1"); 
+       var myimg3 = document.getElementById("header1"); 
+  //Automatic Image Data (Signatories)!!
+  var docRef = db.collection("Images").doc("signatories.png");
+docRef.get().then((doc) => {
+    if (doc.exists) {
+       myimg.src = doc.data().ImageURL; 
+       console.log("Signatories Present")
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
     }
-    else{
-      console.log("yey")
-    }
+}).catch((error) => {
+    console.log("Error getting document:", error);
 });
-
-
+//Automatic Image Data (Logo)!!
+var docRef = db.collection("Images").doc("logo.png");
+docRef.get().then((doc) => {
+    if (doc.exists) {
+       myimg2.src = doc.data().ImageURL; 
+       console.log("Logo Present")
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch((error) => {
+    console.log("Error getting document:", error);
+});
+//Automatic Image Data (Header)!!
+var docRef = db.collection("Images").doc("header.png");
+docRef.get().then((doc) => {
+    if (doc.exists) {
+       myimg3.src = doc.data().ImageURL; 
+       console.log("Header Present")
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch((error) => {
+    console.log("Error getting document:", error);
+});
 
 function getStories() {
     //--------------ID data---------------------//
 var result = [];
-db.collection("patientvalues").doc(username).collection("DATE").get().then(querySnapshot => {
-  querySnapshot.forEach(doc => result.push(doc.id));
-  result.forEach( function(item) { 
-    const optionObj = document.createElement("option");
-    optionObj.textContent = item;
+db.collection("patientvalues").doc(username + " Mythic 60").collection("DATE").get().then(querySnapshot => {
+  querySnapshot.forEach(doc => result.push(doc.id)); 
+    result.forEach( function(item) { 
+      const optionObj = document.createElement("option");
+     //mm-dd-yyyy
+     db.collection("DateSetting").doc("Format").get().then((doc) => {
+      var format1 = doc.data().format; 
+     if (format1 == "mm-dd-yyyy") 
+    {
+      optionObj.textContent = item.replace(/(\d*)-(\d*)-(\d*)/,'$2-$1-$3');
+    }
+    if (format1 == "dd-mm-yyyy") 
+    {
+      optionObj.textContent = item.replace(/(\d*)-(\d*)-(\d*)/,'$1-$2-$3');
+    }
+    if (format1 == "yyyy-dd-mm") 
+    {
+      optionObj.textContent = item.replace(/(\d*)-(\d*)-(\d*)/,'$3-$1-$2');
+    } 
+    if (format1 == "yyyy-mm-dd") 
+    {
+      optionObj.textContent = item.replace(/(\d*)-(\d*)-(\d*)/,'$3-$2-$1');
+    } 
     document.getElementById("dateselect1").appendChild(optionObj);
     $('#dateselect1').selectpicker('refresh');
-  }); 
+  })
+    
+    }); 
+
+  
 })
 return result;
 }
@@ -645,8 +771,26 @@ function sidfunction() {
    //--------------ID data---------------------//
 
 var result = [];
-var x = document.getElementById("dateselect1").value;
-db.collection("patientvalues").doc(username).collection("DATE").doc(x).collection("SID").get().then(querySnapshot => {
+db.collection("DateSetting").doc("Format").get().then((doc) => {
+  var format2 = doc.data().format; 
+ if (format2 == "mm-dd-yyyy") 
+{
+  var x = document.getElementById("dateselect1").value.replace(/(\d*)-(\d*)-(\d*)/,'$2-$1-$3');
+}
+if (format2 == "dd-mm-yyyy") 
+{
+  var x = document.getElementById("dateselect1").value.replace(/(\d*)-(\d*)-(\d*)/,'$1-$2-$3');
+}
+if (format2 == "yyyy-dd-mm") 
+{
+var x = document.getElementById("dateselect1").value.replace(/(\d*)-(\d*)-(\d*)/,'$2-$3-$1')
+}
+if (format2 == "yyyy-mm-dd") 
+{
+var x = document.getElementById("dateselect1").value.replace(/(\d*)-(\d*)-(\d*)/,'$3-$2-$1')
+}
+
+db.collection("patientvalues").doc(username + " Mythic 60").collection("DATE").doc(x).collection("SID").get().then(querySnapshot => {
   querySnapshot.forEach(doc => result.push(doc.id));
   result.forEach( function(item) { 
     const optionObj = document.createElement("option");
@@ -655,6 +799,7 @@ db.collection("patientvalues").doc(username).collection("DATE").doc(x).collectio
     $('#sidselect').selectpicker('refresh');
     
   }); 
+})
 })
 return result;
 

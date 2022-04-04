@@ -15,21 +15,98 @@
   const analytics = getAnalytics(app);
   firebase.initializeApp(firebaseConfig);
   import {
-    getFirestore, query, doc, getDoc, where ,getDocs, onSnapshot, collection 
+    getFirestore, query, doc,setDoc,getDoc, where ,getDocs, onSnapshot, collection, 
   }
   from "https://www.gstatic.com/firebasejs/9.3.0/firebase-firestore.js"
+
+
+  
+  import {
+    getStorage, ref as sRef, uploadBytesResumable, getDownloadURL
+  }
+  from "https://www.gstatic.com/firebasejs/9.3.0/firebase-storage.js"
+
 const db = getFirestore(); 
+let db2 = firebase.firestore();
 var auto_inc = 0; 
 var logresultstable = document.getElementById("logresults"); 
   firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
+    if (user) { 
       var user = firebase.auth().currentUser;
       if(user != null){ 
-        var io= user.email;
+        console.log(user.email);
 
       }
-    } 
+    }
+      db2.collection("DateSetting").doc("Format").get().then((doc) => {
+        var format3 = doc.data().format; 
+        const optionObj = document.createElement("option");
+        const optionObj2 = document.createElement("option");
+        const optionObj3 = document.createElement("option");
+        const optionObj4 = document.createElement("option");
+        const optionObj5 = document.createElement("option");
+        optionObj.textContent = "Current Selection: " + format3; 
+        optionObj.disabled = true; 
+        optionObj.selected = true; 
+        optionObj.style = "text-align:center"; 
+        optionObj.className = "btn-disabled"
 
+        optionObj2.textContent = "dd-mm-yyyy";
+        optionObj2.style = "text-align:center;"; 
+
+        optionObj3.textContent = "mm-dd-yyyy";
+        optionObj3.style = "text-align:center;"; 
+
+        optionObj4.textContent = "yyyy-mm-dd";
+        optionObj4.style = "text-align:center;"; 
+
+        optionObj5.textContent = "yyyy-dd-mm";
+        optionObj5.style = "text-align:center;"; 
+
+
+        document.getElementById("dateselection").appendChild(optionObj);
+        document.getElementById("dateselection").appendChild(optionObj2);
+        document.getElementById("dateselection").appendChild(optionObj3);
+        document.getElementById("dateselection").appendChild(optionObj4);
+        document.getElementById("dateselection").appendChild(optionObj5);
+        $('#dateselection').selectpicker('refresh');
+        $('#dateselection').selectpicker('render');
+      }); 
+    
+    var socket = io();
+    var machinename; 
+    socket.on('status', function(status) {
+      console.log(status);
+      if (String(status).includes("COM1") ){
+       machinename = "Orphee Mythic 22"; 
+         //SelectPicker Nav
+       const navobj = document.createElement("li");
+       const navobj2 = document.createElement("a");
+       navobj2.textContent = "Mythic 22";
+       navobj2.href = "/myth22/run"; 
+       navobj.appendChild(navobj2)
+       document.getElementById("homeSubmenu1").appendChild(navobj);
+      }
+      if (String(status).includes("COM2") ){
+        machinename = "Orphee Mythic 18"; 
+        const navobj = document.createElement("li");
+        const navobj2 = document.createElement("a");
+        navobj2.textContent = "Mythic 18";
+        navobj2.href = "/myth18/run"; 
+        navobj.appendChild(navobj2)
+        document.getElementById("homeSubmenu1").appendChild(navobj);
+       }
+       if (String(status).includes("COM3") ){
+        machinename = "Orphee Mythic 60"; 
+        const navobj = document.createElement("li");
+        const navobj2 = document.createElement("a");
+        navobj2.textContent = "Mythic 22";
+        navobj2.href = "/myth60/run"; 
+        navobj.appendChild(navobj2)
+        document.getElementById("homeSubmenu1").appendChild(navobj);
+       }
+      socket.close();
+    });
      function AddItemToTable (activity,date,machine,sid,testdate,username)
      {
        let tr_data = document.createElement('tr'); 
@@ -131,7 +208,7 @@ datalog.push(doc.data());
        });
 
      });
-    },1200);
+    },2000);
 
    document.getElementById("advancedbtn").addEventListener('click',function ()
 {
@@ -142,7 +219,6 @@ datalog.push(doc.data());
    }); 
  
 }); 
-
 var barcode = '';
 var interval;
 document.addEventListener('keydown', function(evt) {
@@ -165,61 +241,108 @@ function handleBarcode(scanned_barcode) {
     
 }
 
-// var table = "#dtBasicExample"; 
-// $('#maxRows').on('change', function()
-// {
-//   $(".pagination").html('')
-// var trnum = 0; 
-// var maxRows = parseInt($(this).val()) 
-// var totalRows = $(table+' tbody tr').length
-// $(table+' tr:gt(0)').each(function()
-// {
-//   trnum++
-//   if(trnum > maxRows)
-//   {
-//     $(this).hide()
-//   }
-//   if(trnum <= maxRows)
-//   {
-//     $(this).show()
-//   }
-// })
-// if (totalRows > maxRows)
-// {
-//   var pagenum = Math.ceil(totalRows/maxRows)
-//   for(var i=1; i<=pagenum;) {
-//     $('.pagination').append('<li data-page="'+i+'">\<span>'+ i++ + '<span class="sr-only">(current)</span></span>\</li>').show()
+//--------Image Upload---------//
+ var reader = new FileReader(); 
+ var proglab = document.getElementById("upprogress"); 
+ document.getElementById("filenamelabel") += " "; 
+function readURL() {
+  var $input = $(this);
+  var $newinput =  $(this).parent().parent().parent().find('.portimg ');
+  if (this.files && this.files[0]) {
+      reader.onload = function (e) {
+          reset($newinput.next('.delbtn'), true);
+          $newinput.attr('src', e.target.result).show();
+          $newinput.after('<input type="button" class="delbtn removebtn" value="✖">');   
+      }
+      reader.readAsDataURL(this.files[0]);
+     var ImgToUpload = this.files[0];
+     var ImgName = document.getElementById("filenamelabel").innerText; 
+     const metaData = {
+      contentType : ImgToUpload.type
+    }
+     const storage = getStorage(); 
+     const storageRef = sRef(storage, "Images/" +ImgName)
+  const UploadTask = uploadBytesResumable(storageRef, ImgToUpload,metaData);
+  
+  UploadTask.on('state-changed', (snapshot)=>{
+    var progress =(snapshot.bytesTransferred / snapshot.totalBytes) * 100; 
+    proglab.innerHTML = "Upload " + progress + "%"; 
+  },
+  (error) => {
+    console.log("error" + error); 
+  },
+  ()=> {
+    getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) => {
+      SaveURLtoFirestore(downloadURL); 
+    }); 
+  }
+  );
+  }
+}
 
-//   }
+$(".custom-file-input").change(readURL);
+$("form").on('click', '.delbtn', function (e) {
+  reset($(this));
+});
 
-// }
-// $('.pagination li:first-child').addClass('active')
-// $('.pagination li').on('click', function()
-// {
-//   var pageNum = $(this).attr('data-page')
-//   var trIndex = 0; 
-//   $('.pagination li').removeClass('active')
-//   $(this).addClass('active')
-//   $(table+' tr: gt(0)').each(function()
-//   {
-//     trIndex++
-//     if(trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows))
-//     {
-// $(this).hide()
-//     } 
-//     else {
-//       $(this).show()
-//     }
-//   })
-// })
-// })
-// $(function(){
-// $('table tr:eq(0)').prepend ('<th>ID</th>')
-// var id = 0; 
-// $('table tr:gt(0)').each(function()
-// {
-//   id++
-//   $(this).prepend('<td>'+id+'</td>')
-// })
-// }) 
+function reset(elm, prserveFileName) {
+  if (elm && elm.length > 0) {
+      var $input = elm;
+      $input.prev('.portimg').attr('src', '').hide();
+      if (!prserveFileName) {
+          $($input).parent().parent().parent().find('input.custom-file-input ').val("");
+          //input.fileUpload and input#uploadre both need to empty values for particular div
+      }
+      elm.remove();
+     
+  }
+}
+document.getElementById("submitdata1").addEventListener("click", function(event) {
+  datesettings(); 
+ 
+ 
+})
 
+
+async function datesettings()
+{
+  var dateselection = document.getElementById("dateselection"); 
+  if(dateselection.value == "dd-mm-yyyy")
+  {
+    await setDoc(doc(db, "DateSetting", "Format"), {
+      format : "dd-mm-yyyy"
+    });
+  }
+  if(dateselection.value == "mm-dd-yyyy")
+  {
+    await setDoc(doc(db, "DateSetting", "Format"), {
+      format : "mm-dd-yyyy"
+    });
+  }
+  if(dateselection.value == "yyyy-mm-dd")
+  {
+    await setDoc(doc(db, "DateSetting", "Format"), {
+      format : "yyyy-mm-dd"
+    });
+  }
+  if(dateselection.value == "yyyy-dd-mm")
+  {
+    await setDoc(doc(db, "DateSetting", "Format"), {
+      format : "yyyy-dd-mm"
+    });
+  }
+  window.location.reload(); 
+}
+
+
+  async function SaveURLtoFirestore(url)
+  {
+  var filename = document.getElementById("filenamelabel").innerText;
+
+  var ref = doc(db, "Images/"+filename); 
+
+  await setDoc(ref, {
+    ImageName: filename,
+    ImageURL : url
+  })
+}

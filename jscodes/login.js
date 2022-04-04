@@ -9,7 +9,30 @@ window.addEventListener("DOMContentLoaded", () => {
       appId: "1:326480477399:web:2b7cf4d69a4895daeb8492",
       measurementId: "G-NHM4EMZ8HS"
     };
+    
     firebase.initializeApp(firebaseConfig);
+    firebase.firestore().enablePersistence()
+    .catch((err) => {
+        if (err.code == 'failed-precondition') {
+            // Multiple tabs open, persistence can only be enabled
+            // in one tab at a a time.
+            console.log(err)
+            // ...
+        } else if (err.code == 'unimplemented') {
+            // The current browser does not support all of the
+            // features required to enable persistence
+            // ...
+            console.log(err)
+        }
+        else{
+          console.log("yey")
+        }
+
+        firebase.firestore().settings({
+          cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED
+      });
+      
+    });
           document.getElementById("login")
             .addEventListener("submit", (event) => {
               event.preventDefault  ();
@@ -33,8 +56,8 @@ window.addEventListener("DOMContentLoaded", () => {
                 }).then(() => {
                   firebase.auth().onAuthStateChanged(function(user) {
                     if (user) {
-                      alert("User " + login + " has logged in")
-                      window.location.assign("myth22/home");
+                      console.log("User " + login + " has logged in")
+                      window.location.assign("/home");
                     } else {
                       return firebase.auth().signOut();
                     }
@@ -42,14 +65,16 @@ window.addEventListener("DOMContentLoaded", () => {
                 }).catch(function(error) {
     var errorCode = error.code;
     var errorMessage = error.message;
-    alert(errorMessage);    
+    document.getElementById("info1").innerHTML = errorMessage
+    $('#myModal1').modal('show');   
 
 });
               return false;
           
             });
         });
-    
+
+       
 //-------------------------------------dangerous code-----------------------------------------//
           document
           .getElementById("forgot-password")
@@ -64,11 +89,13 @@ window.addEventListener("DOMContentLoaded", () => {
         firebase.auth()
           .sendPasswordResetEmail(email)
            .then(function () { 
-            alert("Email Sent to " + email);
+          document.getElementById("info1").innerHTML = "Email Sent to " + email
+            $('#myModal1').modal('show');
           }).catch(function(error) {
     var errorCode = error.code;
     var errorMessage = error.message;
-    alert(errorMessage);     
+    document.getElementById("info1").innerHTML = errorMessage
+    $('#myModal1').modal('show'); 
     console.log(error);
 });
         }

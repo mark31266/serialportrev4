@@ -131,7 +131,7 @@
                 var doc = db.collection("patientvalues").doc(idSTRING + " Mythic 18").collection("DATE").doc(DATEinput.innerText).collection("SID").doc(SIDinput.innerText);
                 doc.get().then((docSnapshot) => {
                   if (docSnapshot.exists) {
-                    alert("Data Exists in the Database"); 
+                    $('#myModal1').modal('show');
                     // window.location.reload(); 
                   } else {
                     // document does not exist (only on online)
@@ -220,11 +220,11 @@
                     Machine : machinename, 
                     barcode : DATEinput.innerText + " "  + SIDinput.innerText
                    }).then(function (){
-                     alert("Data Written! " + "SID: " + SIDinput.innerText); 
+                     console.log("Data Written! " + "SID: " + SIDinput.innerText); 
          
                  }).catch(function(error)
                  {
-                   alert("Error Writing Document" + error);
+                   console.log("Error Writing Document" + error);
                  }); 
                }
                
@@ -260,7 +260,7 @@
            //WBC DATA
            socket.on('WBC', function(WBC) {
              if (WBC !== null ){
-               th_wbcunit.innerHTML += "<b>x10<sup>3</sup>/µL</b>" ;     
+               th_wbcunit.innerHTML += "x10<sup>3</sup>/µL" ;     
                var wbca = String(WBC).substr(3,5).replace(";", "").replace(";", ""); 
               /*low */ var wbcb = String(WBC).substr(12,6).replace(";", "").replace(";", "") ; 
               /* high */ var wbcc = String(WBC).substr(29,6).replace(";", "").replace(";", "");    
@@ -282,8 +282,8 @@
            //WBCL DATA
               socket.on('WBCL', function(WBCL) {
               if (WBCL !== null ){
-              th_wbcnormal.innerHTML += "<b>" + String(WBCL).substr(12,6).replace(";", "").replace(";", "") 
-              + " - " + String(WBCL).substr(29,6).replace(";", "").replace(";", "") + "</b>";
+              th_wbcnormal.innerHTML +=  + String(WBCL).substr(12,6).replace(";", "").replace(";", "") 
+              + " - " + String(WBCL).substr(29,6).replace(";", "").replace(";", "") ;
             } 
           });
                
@@ -380,55 +380,12 @@
                } 
            });
          
-           document.getElementById("submitbtn").addEventListener("click", function(event) {
-             var fn = document.getElementById("fnameinputs");
-             var ln = document.getElementById("lnameinputs");
-             let gn = document.getElementById('genderselect'); 
-             let an = document.getElementById('ageinputs');
-             let pn = document.getElementById('physicianinputs');
-             let bn = document.getElementById('bloodselect');
-             let bnn1 = document.getElementById('bloodselect'); 
-             let bnn2 = document.getElementById('th_blood'); 
-             if (fn !== null && fn.value === "" || ln !== null && ln.value === "" || an !== null && an.value === "" || gn !== null && gn.value === "" || pn !== null && pn.value === "" || bn !== null && bn.value === "" )
-             {
-              
-               alert("Missing Details\r\nPlease fill out the field/s and press submit")
-               bnn2.innerHTML += "<b>" + bnn1.value + "</b>"; 
-             }
-             else{
-               bnn2.innerHTML += "<b>" + bnn1.value + "</b>"; 
-               socket.close(); 
-               doc_withautoincrement(); 
-              window.print(); 
-              JsBarcode("#barcode1", (DATEinput.innerText + " " + SIDinput.innerText), {
-                format: "CODE39",
-                flat : true,
-              lineColor: "#0aa",
-                              width: 1,
-                              height: 50,
-                              displayValue: true
-              })
-              db.collection("auditlog").doc(date2.innerText + " " + clock1.innerText).set(
-                {
-                id : idSTRING,
-                SID : SIDinput.innerText,
-                Test_Run_Date : DATEinput.innerText,
-                Activity : "Run Sample",
-                Machine : machinename,
-                DateDid : date2.innerText + " " + clock1.innerText 
-                })
-              alert("Data Written! " + "SID: " + SIDinput.innerText); 
-             setTimeout(function(){    
-                window.location.reload();  
-             }, 1000);
-             }
-         
-           }); 
+            
            
            //RBC DATA
              socket.on('RBC', function(RBC) {
              if (RBC !== null ) {
-               th_rbcunit.innerHTML += "<b>x10<sup>6</sup>/µL</b>" ;
+               th_rbcunit.innerHTML += "x10<sup>6</sup>/µL" ;
                var rbca =  String(RBC).substr(4,4); 
                /*low */ var rbcb = String(RBC).substr(18,6).replace(";", "").replace(";", "")
                /* high */ var rbcc =  String(RBC).substr(30,6).replace(";", "").replace(";", "") + "</b>";   
@@ -451,17 +408,17 @@
           //RBCL DATA
              socket.on('RBCL', function(RBCL) {
              if (RBCL !== null ){
-              th_rbcnormal.innerHTML += "<b>" + /*low*/  String(RBCL).substr(18,6).replace(";", "").replace(";", "")
-               + /*High*/ " - " + String(RBCL).substr(30,6).replace(";", "").replace(";", "") + "</b>";
+              th_rbcnormal.innerHTML +=  /*low*/  String(RBCL).substr(18,6).replace(";", "").replace(";", "")
+               + /*High*/ " - " + String(RBCL).substr(30,6).replace(";", "").replace(";", "") ;
              } 
            });
                
           //HGB DATA
             socket.on('HGB', function(HGB) {
               if (HGB !== null ){
-                th_hgbunit.innerHTML += "<b>g/dL</b>" ;
+                th_hgbunit.innerHTML += "g/dL" ;
                 var hgba =   String(HGB).substr(4,4).replace(";", ""); 
-                /*low */ var hgbb =  String(HGB).substr(9,5).replace(";", "").replace(";", "").replace(/[^0-9.]/, "")
+                /*low */ var hgbb =  String(HGB).substr(9,6).replace(";", "").replace(";", "").replace(/[^0-9.]/, "")
                 /* high */ var hgbc =  String(HGB).substr(21,5).replace(";", "").replace(";", "").replace(/[^0-9.]/, "") + "</b>";   
               
                   if (parseFloat(hgba) > parseFloat(hgbc))
@@ -482,18 +439,18 @@
           //HGBL DATA
             socket.on('HGBL', function(HGBL) {
             if (HGBL !== null ){
-                th_hgbnormal.innerHTML += "<b>" + /*low*/  String(HGBL).substr(9,5).replace(";", "").replace(";", "").replace(/[^0-9.]/, "")
-                 + /*High*/ " - " + String(HGBL).substr(22,5).replace(";", "").replace(";", "").replace(/[^0-9.]/, "") + "</b>";
+                th_hgbnormal.innerHTML +=  /*low*/  String(HGBL).substr(9,6).replace(";", "").replace(";", "").replace(/[^0-9.]/, "")
+                 + /*High*/ " - " + String(HGBL).substr(22,5).replace(";", "").replace(";", "").replace(/[^0-9.]/, "");
                } 
              });
          
           //HCT DATA
             socket.on('HCT', function(HCT) {
              if (HCT !== null ){
-                th_hctunit.innerHTML += "<b>L/L</b>" ;
-               var hcta =  String(HCT).substr(4,5); 
-               /*low */ var hctb = String(HCT).substr(12,6).replace(";", "").replace(";", "");
-               /* high */ var hctc = String(HCT).substr(24,6).replace(";", "").replace(";", "") + "</b>";   
+                th_hctunit.innerHTML += "L/L" ;
+               var hcta =  String(HCT).substr(4,5).replace(";", ""); 
+               /*low */ var hctb = String(HCT).substr(12,5).replace(";", "").replace(";", "");
+               /* high */ var hctc = String(HCT).substr(26,5).replace(";", "").replace(";", "") + "</b>";   
              
                  if (parseFloat(hcta) > parseFloat(hctc))
                      {
@@ -513,8 +470,8 @@
           //HCTL DATA
             socket.on('HCTL', function(HCTL) {
             if (HCTL !== null ){
-                th_hctnormal.innerHTML += "<b>" + /*low*/  String(HCTL).substr(12,6).replace(";", "").replace(";", "")
-                + /*High*/ " - " + String(HCTL).substr(24,6).replace(";", "").replace(";", "") + "</b>";
+                th_hctnormal.innerHTML +=  /*low*/  String(HCTL).substr(12,5).replace(";", "").replace(";", "")
+                + /*High*/ " - " + String(HCTL).substr(26,5).replace(";", "").replace(";", "");
                } 
              });
           
@@ -577,7 +534,7 @@
                 th_mchnormal.innerHTML +=  /*low*/  String(MCHL).substr(12,5).replace(";", "").replace(";", "")
                 + /*High*/ " - " + String(MCHL).substr(29,8).replace(";", "").replace(";", "");
           
-         }
+              }
               });
          
           //MCHC DATA
@@ -602,7 +559,6 @@
                        } 
                  } 
                });
-         
           //MCHCL DATA
             socket.on('MCHCL', function(MCHCL) {
             if (MCHCL !== null ){
@@ -620,13 +576,13 @@
                  let bnn2 = document.getElementById('th_blood'); 
                  if (fn !== null && fn.value === "" || ln !== null && ln.value === "" || an !== null && an.value === "" || gn !== null && gn.value === "" || pn !== null && pn.value === "" || bn !== null && bn.value === ""  )
                  {
-                   socket.close(); 
-                   alert("Missing Details\r\nPlease fill out the field/s and press submit")
-                
+                  socket.close(); 
+                   $('#myModal').modal('show');
                  }
                  else{
+                  socket.close(); 
                    bnn2.innerHTML += "<b>" + bnn1.value + "</b>"; 
-                   socket.close(); 
+                 
                    doc_withautoincrement(); 
                   window.print(); 
                   JsBarcode("#barcode1", (DATEinput.innerText + " " + SIDinput.innerText), {
@@ -659,7 +615,7 @@
           //PLT DATA
             socket.on('PLT', function(PLT) {
             if (PLT !== null ){
-                th_pltunit.innerHTML += "<b>x10<sup>3</sup>/µL</b>" ;
+                th_pltunit.innerHTML += "x10<sup>3</sup>/µL" ;
                 var plta = String(PLT).substr(4,4); 
                 /*low */ var pltb =  String(PLT).substr(12,6).replace(";", "").replace(";", "").replace(/[^0-9.]/, "")
                 /* high */ var pltc =  String(PLT).substr(29,6).replace(";", "").replace(";", "") + "</b>";   
@@ -682,12 +638,88 @@
           //PLTL DATA
             socket.on('PLTL', function(PLTL) {
             if (PLTL !== null ){
-                th_pltnormal.innerHTML +=  "<b>" + String(PLTL).substr(12,6).replace(";", "").replace(";", "").replace(/[^0-9.]/, "")
-                + " - " + String(PLTL).substr(29,6).replace(";", "").replace(";", "") + "</b>"
-           
-              } 
+                th_pltnormal.innerHTML +=  String(PLTL).substr(12,6).replace(";", "").replace(";", "").replace(/[^0-9.]/, "")
+                + " - " + String(PLTL).substr(29,6).replace(";", "").replace(";", "")  } 
             });
                
             function printfunction() {
               window.print();
           }
+
+          function dataonload() {
+            var myimg = document.getElementById("signatories1"); 
+            var myimg2 = document.getElementById("logo1"); 
+            var myimg3 = document.getElementById("header1"); 
+            //Automatic Image Data (Signatories)!!
+            var docRef = db.collection("Images").doc("signatories.png");
+          docRef.get().then((doc) => {
+              if (doc.exists) {
+                 myimg.src = doc.data().ImageURL; 
+                 console.log("Signatories Present")
+              } else {
+                  // doc.data() will be undefined in this case
+                  console.log("No such document!");
+              }
+          }).catch((error) => {
+              console.log("Error getting document:", error);
+          });
+          //Automatic Image Data (Logo)!!
+          var docRef = db.collection("Images").doc("logo.png");
+          docRef.get().then((doc) => {
+              if (doc.exists) {
+                 myimg2.src = doc.data().ImageURL; 
+                 console.log("Logo Present")
+              } else {
+                  // doc.data() will be undefined in this case
+                  console.log("No such document!");
+              }
+          }).catch((error) => {
+              console.log("Error getting document:", error);
+          });
+          //Automatic Image Data (Header)!!
+          var docRef = db.collection("Images").doc("header.png");
+          docRef.get().then((doc) => {
+              if (doc.exists) {
+                 myimg3.src = doc.data().ImageURL; 
+                 console.log("Header Present")
+              } else {
+                  // doc.data() will be undefined in this case
+                  console.log("No such document!");
+              }
+          }).catch((error) => {
+              console.log("Error getting document:", error);
+          });
+          }
+          var socket1 = io();
+          socket1.on('status', function(status) {
+            console.log(status);
+            if (String(status).includes("COM1") ){
+             machinename = "Orphee Mythic 22"; 
+               //SelectPicker Nav
+             const navobj = document.createElement("li");
+             const navobj2 = document.createElement("a");
+             navobj2.textContent = "Mythic 22";
+             navobj2.href = "/myth22/run"; 
+             navobj.appendChild(navobj2)
+             document.getElementById("homeSubmenu1").appendChild(navobj);
+            }
+            if (String(status).includes("COM2") ){
+              machinename = "Orphee Mythic 18"; 
+              const navobj = document.createElement("li");
+              const navobj2 = document.createElement("a");
+              navobj2.textContent = "Mythic 18";
+              navobj2.href = "/myth18/run"; 
+              navobj.appendChild(navobj2)
+              document.getElementById("homeSubmenu1").appendChild(navobj);
+             }
+             if (String(status).includes("COM3") ){
+              machinename = "Orphee Mythic 60"; 
+              const navobj = document.createElement("li");
+              const navobj2 = document.createElement("a");
+              navobj2.textContent = "Mythic 22";
+              navobj2.href = "/myth60/run"; 
+              navobj.appendChild(navobj2)
+              document.getElementById("homeSubmenu1").appendChild(navobj);
+             }
+            socket1.close();
+          });

@@ -72,13 +72,13 @@ a.clock{
   background: #39464d;
   color: #fff;
   transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
-  transform-origin: bottom left;
+  transform: translate3d(0px, 0px, 0px);
   font-family:'Segoe UI Semibold';
 }
 
 #sidebar.active {
   margin-left: -250px;
-  transform: rotateY(100deg);
+  transform: translate3d(0px, 0px, 0px);
 }
 
 #sidebar .sidebar-header {
@@ -170,7 +170,7 @@ ul.CTAs a {
 ----------------------------------------------------- */
 #content {
   width: 100%;
-  padding: 20px;
+  padding: 0px;
   min-height: 100vh;
   transition: all 0.3s;
 }
@@ -216,7 +216,7 @@ ul.CTAs a {
 @media (max-width: 768px) {
   #sidebar {
       margin-left: -250px;
-      transform: rotateY(90deg);
+      transform: translate3d(0px, 0px, 0px);
   }
   #sidebar.active {
       margin-left: 0;
@@ -308,6 +308,7 @@ background-color: #eee;
   text-align: center;
   justify-content: center;
   align-items: center;
+  display: none;
 }
 #time{
     width: 100%;
@@ -650,3 +651,5 @@ select {
           text-decoration: none;
           transition: all 0.3s;
         }
+
+

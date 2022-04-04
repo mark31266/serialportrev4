@@ -72,13 +72,13 @@ a.clock1{
   background: #39464d;
   color: #fff;
   transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
-  transform-origin: bottom left;
+  transform: translate3d(0px, 0px, 0px);
   font-family:'Segoe UI Semibold';
 }
 
 #sidebar.active {
   margin-left: -250px;
-  transform: rotateY(100deg);
+  transform: translate3d(0px, 0px, 0px);
 }
 
 #sidebar .sidebar-header {
@@ -170,7 +170,7 @@ ul.CTAs a {
 ----------------------------------------------------- */
 #content {
   width: 100%;
-  padding: 20px;
+  padding: 0px;
   min-height: 100vh;
   transition: all 0.3s;
 }
@@ -216,7 +216,7 @@ ul.CTAs a {
 @media (max-width: 768px) {
   #sidebar {
       margin-left: -250px;
-      transform: rotateY(90deg);
+      transform: translate3d(0px, 0px, 0px);
   }
   #sidebar.active {
       margin-left: 0;
@@ -308,6 +308,7 @@ background-color: #eee;
   text-align: center;
   justify-content: center;
   align-items: center;
+  display: none; 
 }
 #time{
     width: 100%;
@@ -387,6 +388,10 @@ select {
   border: indigo;
   background: transparent !important;
   color: #000; 
+}
+
+#optionselect{
+  visibility: hidden;
 }
 
 .row-container {
@@ -619,6 +624,32 @@ select {
   font-size: 15px;
   border-radius: 25px;
   }
+
+  #picbtn {
+    background-color: #337277 !important;
+    padding: 10px 30px;
+    font-family: 'Segoe UI Light';
+    font-size: 15px;
+    border-radius: 25px;
+  }
+
+  #refbtn {
+    background-color: #d8e6e7 !important;
+    padding: 10px 30px;
+    font-family: 'Segoe UI Light';
+    font-size: 15px;
+    border-radius: 25px;
+     
+  }
+
+
+  #datebtn {
+    background-color:#1f3a3d !important;
+    padding: 10px 30px;
+    font-family: 'Segoe UI Light';
+    font-size: 15px;
+    border-radius: 25px;
+  }
   
 
 p.Language{
@@ -665,6 +696,24 @@ body {
         text-decoration: none;
         transition: all 0.3s;
       }
+      
+  #ModalPic{
+    background-color: rgba(10,10,10,0.45);
+    }
+
+    #Modaldate{
+      background-color: rgba(10,10,10,0.45);
+      }
+
+      #Modalref{
+        background-color: rgba(10,10,10,0.45);
+        }
+    a, a:hover, a:focus {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.3s;
+   
+    }
 
       .modal-header{
         background: #337277; 
@@ -689,7 +738,7 @@ body {
         }
 
         .modal-content{ 
-          width: 300%;
+          width: 240%;
           height: 540px;
         }
 
@@ -698,8 +747,176 @@ body {
 }
 
 
+.file {
+  visibility: hidden;
+  position: absolute;
+}
+
+/*Fread*/ 
+img.portimg {
+
+  max-width: 200px;
+  max-height: 200px;
+}
+
+
+.portimg {
+
+  width : 150px;
+  height : 150px; 
+  border : 1px black solid; 
+  margin-top: 20px;
+}
+.portimgborder {
+
+  width : 122px;
+  height : 122px; 
+  border : 1px black solid; 
+  margin-top: 20px;
+}
+
+
+
+.delbtn{
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border:1px black;
+  border-radius: 15px;
+  font-size: 8px;
+  font-weight: bolder;
+  text-align: center;
+  margin-top: 5px;
+  background-color: lightgrey;
+}
+
+.portimg1{
+  width:150px;
+  min-height: 100px;
+  border: 2px solid #dddddd;
+  margin-top: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #cccccc;
+}
+
+.image-preview__image{
+  display:none;
+  width:100%;
+}
+
+/**.select-upld{
+  color: #333232;
+  background: transparent;
+  font-size: 1.3rem;
+  font-family: "Segoe UI Semibold";
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}**/
+
+.inputBoxUpload input{  
+  width: 100%;
+  padding-left:5px;
+  font-size: 21px;
+  color: #333232;
+  border: none;
+  border-bottom: 0.065rem solid #333232;
+  outline: none;
+  background: transparent;
+  font-family: "Segoe UI Semibold";
+}
+
+.btn-light{
+  background-color: transparent;
+  border-color: #cacaca;
+}
+
+.btn-light:hover{
+  background-color: transparent;
+  border-color: #333232;
+  color:black;
+}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{
+  background-color: #336e74;
+  background-image:linear-gradient(to bottom,#336e74 0,#336e74 100%);
+}
+
+li.selected.active{
+  background-color: #336e74;
+}
+
+li.seleceted{
+  background-color: #336e74;
+}
+
+
+.modal-header{
+  font-family: Segoe UI Light;
+  text-align: center;
+  color: white;
+  background: #337277;
+
+ 
+}
+
+.modal-footer{
+  background: #fafafa;
+}
+
+.text-modal-header{
+  font-family: Segoe UI Light;
+  color:white;
+}
 
 
 
 
-      
+      #myModal1{
+        background-color: rgba(10,10,10,0.45);
+        }
+        a, a:hover, a:focus {
+          color: inherit;
+          text-decoration: none;
+          transition: all 0.3s;
+        }
+
+     
+div.filter-option-inner-inner{
+  text-align:center;
+  color:black;
+}
+
+.bootstrap-select>select{
+  content: hidden;
+}
+
+
+.btn-sbmt1 {
+  background-color: #337277 !important;
+  padding: 10px 30px;
+  font-family: 'Segoe UI Light';
+  font-size: 15px;
+  border-radius: 25px;
+  margin-left: 40%;
+  margin-top: 5%;
+  }
+
+  #dateselection{
+    visibility: hidden;
+  }
+
+/*reference modal*/ 
+  #seq {
+    background-color: #277277;
+     color: white;
+     font-family: 'Segoe UI';
+    font-size: 18px;
+    text-align: center;
+    }   
+
+  

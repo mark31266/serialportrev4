@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Settings</title>
   <meta charset="utf-8">
@@ -8,190 +9,328 @@
   <script src="/rep/firebase-analytics.js"></script>
   <script src="/rep/firebase-firestore.js"></script>
   <script src="/rep/firebase-auth.js"></script>
-<script src="/rep/firebase-database.js"></script>
-  <link rel="stylesheet" href="/rep/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-  <script src="/rep/jquery.min.js"></script> 
-  <script src="/rep/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-<script src="/rep/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-<script src='/rep/socket.io.js'></script>
-<script defer src="/rep/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="/rep/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-    <script src='/jscodes/moment.js'></script>
+  <script src="/rep/firebase-database.js"></script>
+  <script src="/rep/jquery.min.js"></script>
+  <!-- <script src="/rep/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+  <link rel="stylesheet" href="/rep/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <!-- <script src="/rep/bootstrap2.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>          -->
+  <script src="/rep/bootstrap2.min.js"></script>
+  <link rel="stylesheet" href="/rep/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+  <script src='/rep/socket.io.js'></script>
+  <script defer src="/rep/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+    crossorigin="anonymous"></script>
+  <script defer src="/rep/fontawesome.js"
+    integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+    crossorigin="anonymous"></script>
+  <script src='/jscodes/moment.js'></script>
+  <script src='https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'></script>
+  <script src='https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js'></script>
 
-      <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
-<script src='https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'></script>
-<script src='https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js'></script>
-<script src=''></script>
-<script src=''></script>
+  <!--try-->
 
-<!--try-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
 
 </head>
 <link rel="stylesheet" href="/css/myth22/settings.css">
-  <body>
+
+<body>
   <div class="wrapper">
-        <!-- Sidebar Holder -->
-        <nav id="sidebar">
-          <div class="sidebar-header">
-              <h2><b>LabX</b></h2>
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <a href="/home">
+          <div id="add1" style="padding-left:15%;"><img class="img" src="/images/LabX.png" width="144" height="136">
           </div>
-          <ul class="list-unstyled components">
-            <p class="search"></p>
-            <li >
-                <a href="/myth22/home">Main Dashboard</a>
+        </a>
+      </div>
+      <ul class="list-unstyled components">
+        <li>
+          <a href="/home">Main Dashboard</a>
+        </li>
+        <li>
+          <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Run Samples</a>
+          <ul class="collapse list-unstyled show" id="homeSubmenu1">
+
+          </ul>
+        </li>
+        <li>
+          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Manage Records</a>
+          <ul class="collapse list-unstyled" id="homeSubmenu">
+            <li>
+              <a href="/myth18/records">Mythic 18</a>
             </li>
             <li>
-                <a href="/myth22/run">Run Samples</a>
+              <a href="/myth22/records">Mythic 22</a>
             </li>
             <li>
-              <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Manage Records</a>
-              <ul class="collapse list-unstyled" id="homeSubmenu">
-                <li>
-                    <a href="/myth18/records">Mythic 18</a>
-                </li>
-                <li>
-                    <a href="/myth22/records">Mythic 22</a>
-                </li>
-                <li>
-                    <a href="/myth60/records">Mythic 60</a>
-                </li>
-            </ul>
-            </li> 
-            <li>
-              <a href="/myth22/about">Contact Us</a>
-          </li>
-            <li class="active">
-              <a href="/myth22/settings">Settings</a>
-          </li>
+              <a href="/myth60/records">Mythic 60</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="/about">Contact Us</a>
+        </li>
+        <li class="active">
+          <a href="/settings">Settings</a>
+        </li>
         </µL>
     </nav>
-        <!-- Page Content Holder -->
-        <div id="content">
-            <nav class="navbar navbar-expand-lg navbar-custom">
-                <div class="container-fluid">
-                    <button type="button" id="sidebarCollapse" class="navbar-btn" style="background-color:transparent">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <ul class="nav navbar-nav navbar-center">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link mr-1 my-1 date1" href="#" id="navbarDropdown" aria-haspopup="true" aria-expanded="false" style="color:white"><div id="date1"></div>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto justify-content-center">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link mr-2 my-1 clock1" href="#" id="navbarDropdown" aria-haspopup="true" aria-expanded="false" style="color:white"><div id="clock"></div>
-                                </a>
-                            </li>                           
-                            <li class="nav-item">
-                                <a class="nav-link" href="/sessionLogout" role="button"><img src="https://firebasestorage.googleapis.com/v0/b/analyzerdb.appspot.com/o/logout.png?alt=media&token=e849b0b4-1e57-49c4-8ff4-412c2a9ade1d" alt="User" width="27px" height="27px"></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- Settings -->
-    <div class="container">
-    <div class="first">
-    <div class="p-2 row">
-    <div class="col-lg-3"><div class="run">Settings</div>
-    </div>  </div>
-     
-    <div id="cal" class="container-fluid" >
-      <div class="row align-items-center">
-
-        <!--Clock-->
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
-          <p></p>
-          <div class="row">
-         
-          <div class="clock">
-            <div class="hour">
-                <div class="hr" id="hr"></div>
+    <!-- Page Content Holder -->
+    <div id="content">
+      <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+          <button type="button" id="sidebarCollapse" class="navbar-btn" style="background-color:transparent">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav navbar-center">
+              <li class="nav-item dropdown">
+                <a class="nav-link mr-1 my-1 date1" href="#" id="navbarDropdown" aria-haspopup="true"
+                  aria-expanded="false" style="color:white">
+                  <div id="date"></div>
+                  <div id="date1"></div>
+                </a>
+              </li>
+            </ul>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto justify-content-center">
+                <li class="nav-item dropdown">
+                  <a class="nav-link mr-2 my-1 clock1" href="#" id="navbarDropdown" aria-haspopup="true"
+                    aria-expanded="false" style="color:white">
+                    <div id="clock"></div>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sessionLogout" role="button"><img
+                      src="https://firebasestorage.googleapis.com/v0/b/analyzerdb.appspot.com/o/logout.png?alt=media&token=e849b0b4-1e57-49c4-8ff4-412c2a9ade1d"
+                      alt="User" width="27px" height="27px"></a>
+                </li>
+              </ul>
             </div>
-            <div class="min">
-                <div class="mn" id="mn"></div>
-            </div>
-            <div class="sec">
-                <div class="sc" id="sc"></div>
           </div>
-        </div>    
-      </div>  
-    </div>
+      </nav>
+      <!-- Settings -->
+      <div class="container">
+        <div class="first">
+          <div class="p-2 row">
+            <div class="col-lg-3">
+              <div class="run">Settings</div>
+            </div>
+          </div>
 
-  
-      <!--Calendar-->
-      <div class="col-md-offset-1 col-md-1"></div>
-  <div class="col-sm-1">
-    
-    <div class="calendar">
-      <div class="month">
-        <i class="fas fa-angle-left prev"></i>
-        <div class="date">
-          <h1></h1>
-          <p></p>
+          <div id="cal" class="container-fluid">
+            <div class="row align-items-center">
+
+              <!--Clock-->
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <p></p>
+                <div class="row">
+
+                  <div class="clock">
+                    <div class="hour">
+                      <div class="hr" id="hr"></div>
+                    </div>
+                    <div class="min">
+                      <div class="mn" id="mn"></div>
+                    </div>
+                    <div class="sec">
+                      <div class="sc" id="sc"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!--Calendar-->
+              <div class="col-md-offset-1 col-md-1"></div>
+              <div class="col-sm-1">
+
+                <div class="calendar">
+                  <div class="month">
+                    <i class="fas fa-angle-left prev"></i>
+                    <div class="date">
+                      <h1></h1>
+                      <p></p>
+                    </div>
+                    <i class="fas fa-angle-right next"></i>
+                  </div>
+                  <div class="weekdays">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                  </div>
+                  <div class="days"></div>
+                </div>
+              </div>
+              <div class="col-1">
+              </div>
+              <div class="col-lg-1"></div>
+              <div class="col-lg-1"></div>
+              <div class="col-lg-12 "></div>
+              <div class="col-lg-10 "></div>
+            </div>
+
+
+
+          </div>
         </div>
-        <i class="fas fa-angle-right next"></i>
       </div>
-      <div class="weekdays">
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-      </div>
-      <div class="days"></div>
-    </div>
-  </div>
-  <div class="col-1">
-</div>
-<div class="col-lg-1"></div>
-<div class="col-lg-1"></div>
-<div class="col-lg-12 "></div>
-<div class="col-lg-10 "></div>
-</div>
 
-
-
-</div></div></div>
-  
-<!--Date-->
-<!-- <div class="form-group mr-2">
+      <!--Date-->
+      <!-- <div class="form-group mr-2">
   <div class="col-sm-2 time"><div class="inputBox" >
       <input id="date" class="form-control" type="date" value="yyyy-mm-dd"></input></div></div>
 </div> -->
 
- 
+
+      <!--REFERENCE BUTTON-->
+      <div class="container">
+        <div class="center-block text-center">
+          &nbsp
+          <div class="col-12">
+            <div class="col">&nbsp</div>
+            <div class="center-block text-center">
+
+              <button id="refbtn" class="btn text-center text-dark" data-toggle="modal"
+                data-target="#Modalref">Reference Range</button>
+              <div class="modal fade" id="Modalref" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+                aria-hidden="true" data-backdrop="false">
+
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                  <div class="modal-content" style="width:800px; height:100%;">
+
+                    <div class="modal-header">
+                      <h5 class="modal-title text-modal-header" id="ModalLongTitle">Edit Range</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-4">
+                          <th id="trd" class="w-10" style="text-align:left">Machine
+                          <th class="no-gutters" style="text-align:center">
+                            <div class="dropdown bootstrap-select fit-width show"></div>
+                            <select class="selectpicker select-dte" id="dateselect1" onchange="sidfunction()"
+                              data-size="4" data-live-search="true" data-width="85%">
+                              <option disabled selected value>Select an Option</option>
+
+                            </select>
+                        </div>
+                        <div class="col-4">
+                          <th id="trd" class="w-10" style="text-align:left">Species
+                          <th class="no-gutters" style="text-align:center">
+                            <div class="dropdown bootstrap-select fit-width show"></div>
+                            <select class="selectpicker select-dte" id="dateselect1" onchange="sidfunction()"
+                              data-size="4" data-live-search="true" data-width="85%">
+                              <option disabled selected value>Select an Option</option>
+
+                            </select>
+                        </div>
+                        <div class="col-2 mt-2">
+                          <button id="submitdata1" class="btn btn-sbmt1 text-light" onclick=""
+                            class="button-xl pt-3"><span>Submit</span></button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">&nbsp
+                        </div>
+                      </div>
 
 
-<div class="row-container">
-  <div class="col-md-12 text-center">
-<p class="Language">Language</p> 
-<select class="selectpicker border rounded border-0" data-live-search="true" data-width="100%">
-  <option data-tokens="#">English</option>
-</select>
-</div>
-<div class="row-container">
-  <div class="col-md-12 text-center">
+                      <table id="results" class="table table-bordered">
+                        <tr id="seq">
+                          <th>Test</th>
+                          <th>l</th>
+                          <th>L</th>
+                          <th>h</th>
+                          <th>H</th>
+                        </tr>
 
-</div>
-<div class="row-container">
-  <div class="col-md-12 text-center">
-<button id="advancedbtn"  class="btn text-center text-light" data-toggle="modal" data-target="#ModalCenter" >Audit Log</button> 
+                        <tr id="wbc">
+                          <td id="seq2">WBC Count</td>
+                        </tr>
+
+                        <tr id="neu">
+                          <td id="seq2">Neutrophil</td>
+                        </tr>
+
+                        <tr id="lym">
+                          <td id="seq2">Lymphocyte</td>
+                        </tr>
+
+                        <tr id="mon">
+                          <td id="seq2">Monocyte</td>
+                        </tr>
+
+                        <tr id="eos">
+                          <td id="seq2">Eosinophil</td>
+                        </tr>
+
+                        <tr id="bas">
+                          <td id="seq2">Basophil</td>
+                        </tr>
+
+                        <tr id="rbc">
+                          <td id="seq2">RBC Count</td>
+                        </tr>
+
+                        <tr id="hgb">
+                          <td id="seq2">HGB</td>
+                        </tr>
+
+                        <tr id="hct">
+                          <td id="seq2">HCT</td>
+                        </tr>
+
+                        <tr id="mcv">
+                          <td id="seq2">MCV</td>
+                        </tr>
+
+                        <tr id="mch">
+                          <td id="seq2">MCH</td>
+                        </tr>
+
+                        <tr id="mchc">
+                          <td id="seq2">MCHC</td>
+                        </tr>
+
+                        <tr id="plt">
+                          <td id="seq2">PLT</td>
+                        </tr>
+
+                      </table>
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <button id="advancedbtn"  class="btn text-center text-light" data-toggle="modal" data-target="#ModalCenter" >Audit Log</button> 
 <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true" data-backdrop="false">
   
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable " role="document">
@@ -207,7 +346,7 @@
       
         <div class="modal-body" >
 
-          
+    
           <script src="/jscodes/date.js"></script>
           <script src="/jscodes/bigdate.js"></script> 
       <table class="table " id="example" style="width:100%" >
@@ -230,36 +369,146 @@
 </div>
 </div>
 </div>
-<!-- <button id="validatebtn" class="btn text-center text-light">Validate</button> -->
-
+<div class="row">
+  <div class="col">
+    &nbsp
+    <div>
+</div>
 </div> 
+</div>
+</div> -->
 
-   <!-- EXPERIMENT TYM -->
- 
+            <!-- UPLOAD PIC -->
 
-  <!-- KAY ED TO -->
-  <!-- <table class="table " id="example" style="width:100%" >
-          
-    <thead>
-      <tr>
-        <th data-sortable="false">Number</th>
-        <th data-sortable="false">Activity</th>
-        <th data-sortable="false">Date and Time </th> 
-        <th data-sortable="false">Machine</th>
-        <th data-sortable="false">SID</th>
-        <th data-sortable="false">Test Run Date</th>
-        <th data-sortable="false">Username</th>
-      </tr>
-  </thead>
-  <tbody id="logresults">
-  </tbody>
-</table> -->
+            &nbsp <div class="col-12">
+              <button id="picbtn" class="btn text-center text-light" data-toggle="modal" data-target="#ModalPic">Change
+                Print Elements</button>
+              <div class="modal fade" id="ModalPic" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+                aria-hidden="true" data-backdrop="false">
 
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable " role="document">
+                  <div class="modal-content" style="width:150%; height:300px;">
+
+                    <div class="modal-header">
+                      <h5 class="modal-title text-modal-header" id="ModalLongTitle">Upload Photo</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body ">
+                      <form>
+                        <div class="row">
+                          <div class="col">
+
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-9 pt-5 form-group hirehide is-empty is-fileinput width100">
+                            <div class="inputBoxUpload">
+                              <select class="selectpicker toggle mb-4 btn-disabled" id="optionselect" data-size="4"
+                                data-width="100%" style="text-align:center;">
+                                <option selected value style="text-align:center;" disabled>Select an Option</option>
+                                <option style="text-align:center;">Logo</option>
+                                <option style="text-align:center;">Header</option>
+                                <option style="text-align:center;">Signatories</option>
+                              </select>
+                            </div>
+                            <div class="custom-file mb-3">
+                              <input type="file" class="custom-file-input" accept="image/jpeg, image/jpg"
+                                value="Choose a file" name="profilepic[]" id="uploadre" name="filename">
+                              <label class="custom-file-label" id="filenamelabel" for="customFile">Choose a file</label>
+
+                              <label id="upprogress"></label>
+                            </div>
+                          </div>
+
+
+                          <div class="col-3 upload-demo">
+                            <div class="upload-demo-wrap"><img class="portimg"></div>
+                          </div>
+                        </div>
+
+                      </form>
+                    </div>
+
+
+
+                  </div>
+                </div>
+              </div>
+
+
+
+              <!-- DATE FORMAT -->
+
+              <button id="datebtn" class="btn text-center text-light" data-toggle="modal"
+                data-target="#Modaldate">Change Date Format</button>
+              <div class="modal fade" id="Modaldate" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+                aria-hidden="true" data-backdrop="false">
+
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable " role="document">
+                  <div class="modal-content" style="width:100%; height:250px;">
+
+                    <div class="modal-header">
+                      <h5 class="modal-title text-modal-header" id="ModalLongTitle">Choose Date Format</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body ">
+
+                      <div class="row">
+                        <div class="col">
+
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-9 pt-2 form-group hirehide is-empty is-fileinput width100">
+                          <div class="inputBoxUpload">
+                            <select class="selectpicker toggle mb-4 btn-disabled" id="dateselection" data-size="6"
+                              data-width="135%" style="text-align:center;">
+                            </select>
+                          </div>
+
+                          <button id="submitdata1" class="btn btn-sbmt1 text-light" onclick=""
+                            class="button"><span>Submit</span>
+
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             </div>
-  </div>
-  <script src="/rep/bootstrap2.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>    
-  <script type="module" src="/jscodes/myth22/settings.js"></script>
-  <script src="/jscodes/navbutton.js"></script>
-  </body>
+          </div>
+
+
+
+          <!-- The Modal1 -->
+          <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" data-backdrop="false" data-target="#myModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-header">
+                <h5 class="modal-title" id="info1"></h5>
+                <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+              </div>
+            </div>
+          </div>
+
+
+          <script>
+            // Add the following code if you want the name of the file appear on select
+            $(".custom-file-input").on("change", function () {
+              var fileName = $(this).val().split("\\").pop();
+              $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
+          </script>
+
+
+          <script type="module" src="/jscodes/myth22/settings.js"></script>
+          <script src="/jscodes/navbutton.js"></script>
+</body>
+
 </html>

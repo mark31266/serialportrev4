@@ -18,29 +18,32 @@ var firebaseConfig = {
   //--------------writing data---------------------//
  
   var socket = io();
+
 socket.on('status', function(status) {
-  console.log(status);
-  if (String(status).includes("COM1") ){
+  if (String(status).includes("COM5") ){
     //SelectPicker Card
-    document.getElementById('data4').innerHTML += "Connected";
     const optionObj = document.createElement("option");
     const optionObj2 = document.createElement("div");
 
  optionObj2.id = "yey10"; 
- optionObj2.innerHTML = "Orphee Mythic 22 (Online)"; 
- optionObj2.href = "/myth22/run"; 
+ optionObj2.innerHTML = "Orphee Mythic 18 Vet (Online)"; 
+ optionObj2.href = "/myth18/run"; 
 
     optionObj.appendChild(optionObj2);
     document.getElementById("machineselect").appendChild(optionObj);
       //SelectPicker Nav
     const navobj = document.createElement("li");
     const navobj2 = document.createElement("a");
-    navobj2.textContent = "Mythic 22";
-    navobj2.href = "/myth22/run"; 
+    navobj2.textContent = "Mythic 18";
+    navobj2.href = "/myth18/run"; 
     navobj.appendChild(navobj2)
     document.getElementById("homeSubmenu1").appendChild(navobj);
-
+    // setTimeout(() => {
+    //   alert("The page will reload to check current machines connected")
+    //   window.location.reload(); 
+    // }, 10000);
     if (!String(status).includes("COM2") ){
+    
       const optionObj = document.createElement("option");
       optionObj.textContent = "Orphee Mythic 18 (Offline)";
       optionObj.disabled = true;
@@ -55,7 +58,7 @@ socket.on('status', function(status) {
 } 
 } 
 else if (String(status).includes("COM2") ){
-  document.getElementById('data4').innerHTML += "Connected";
+
   const optionObj = document.createElement("option");
   optionObj.textContent = "Orphee Mythic 18 (Online)";
   optionObj.value = "/myth18/run";
@@ -79,7 +82,7 @@ if (!String(status).includes("COM3") ){
 } 
 }
 else if (String(status).includes("COM3") ){
-  document.getElementById('data4').innerHTML += "Connected";
+
   const optionObj = document.createElement("option");
   optionObj.textContent = "Orphee Mythic 60 (Online)";
   optionObj.value = "/myth60/run";
@@ -101,10 +104,11 @@ else if (String(status).includes("COM3") ){
     optionObj.textContent = "Orphee Mythic 18 (Offline)";
     document.getElementById("machineselect").appendChild(optionObj); 
   } 
-}else
+}
+else
 {
-  document.getElementById('data4').innerHTML += "Not Connected";
-  
+  document.getElementById('data4').innerHTML = "Not Connected";
+
 }
 socket.close(); 
 }); 
@@ -126,19 +130,25 @@ socket.on('uptimedata', function(uptimedata)
       document.getElementById("opname").innerText += username ;  
       document.getElementById("usrLvl").innerText = "Medical Practitioner";   
       //count data
- 
-   db.collection("patientvalues").doc(username).collection("DATE").get()
+
+    db.collection("auditlog").where("Activity", "==", "Run Sample").get()
   .then( snapshot => document.getElementById("data1").innerHTML = snapshot.size) ;
 
-  db.collection("patientvalues").get()
-  .then( snapshot => document.getElementById("data2").innerHTML = snapshot.size) ;
-
+  db.collection("auditlog").where("Activity", "==", "Update").get()
+  .then( 
+    snapshot => document.getElementById("data2").innerHTML = snapshot.size) ;
   
-  db.collection("patientvalues").doc(username).collection("DATE").get()
+    db.collection("auditlog").where("Activity", "==", "Run Sample").get()
   .then( snapshot => document.getElementById("data3").innerHTML = String((parseFloat(snapshot.size) / 7).toFixed(2))) ;
 
+  
+  db.collection("users").get()
+  .then( snapshot => document.getElementById("data4").innerHTML = snapshot.size) ;
 
-  db.collection("patientvalues").doc(username).collection("DATE").doc("26-03-2021").collection("SID").doc("2").collection("DATA")
+  db.collection("Timestamp").doc("Constant").get().then((doc) => {
+    var testdate1 = doc.data().date;
+    var testsid1 = doc.data().sid;
+  db.collection("patientvalues").doc(username + " Mythic 22").collection("DATE").doc(testdate1).collection("SID").doc(testsid1).collection("DATA")
      .get()  
      .then(snapshot => {
        snapshot.forEach(doc => {
@@ -161,7 +171,7 @@ socket.on('uptimedata', function(uptimedata)
            document.getElementById('wbc1').innerHTML += wbc1;
            document.getElementById('lym1').innerHTML += lym1;
            document.getElementById('eos1').innerHTML += eos1;
-           document.getElementById('rbc1').innerText += rbc1;
+           document.getElementById('rbc1').innerHTML += rbc1;
            document.getElementById('hct1').innerHTML += hct1;
            document.getElementById('neu1').innerHTML += neu1;
            document.getElementById('mon1').innerHTML += mon1;
@@ -175,8 +185,12 @@ socket.on('uptimedata', function(uptimedata)
      .catch(err => {
        console.log('Error getting documents', err);
      });
+    })
    //-----------------------Card2---------------------------------//
-   db.collection("patientvalues").doc(username).collection("DATE").doc("24-06-2021").collection("SID").doc("00001").collection("DATA")
+   db.collection("Timestamp").doc("Constant2").get().then((doc) => {
+    var testdate2 = doc.data().date;
+    var testsid2 = doc.data().sid;
+   db.collection("patientvalues").doc(username + " Mythic 22").collection("DATE").doc(testdate2).collection("SID").doc(testsid2).collection("DATA")
    .get()  
    .then(snapshot => {
      snapshot.forEach(doc => {
@@ -199,7 +213,7 @@ socket.on('uptimedata', function(uptimedata)
          document.getElementById('wbc2').innerHTML += wbc2;
          document.getElementById('lym2').innerHTML += lym2;
          document.getElementById('eos2').innerHTML += eos2;
-         document.getElementById('rbc2').innerText += rbc2;
+         document.getElementById('rbc2').innerHTML += rbc2;
          document.getElementById('hct2').innerHTML += hct2;
          document.getElementById('neu2').innerHTML += neu2;
          document.getElementById('mon2').innerHTML += mon2;
@@ -213,86 +227,8 @@ socket.on('uptimedata', function(uptimedata)
    .catch(err => {
      console.log('Error getting documents', err);
    });
-      //-----------------------Card3---------------------------------//
-      db.collection("patientvalues").doc(username).collection("DATE").doc("22-05-2022").collection("SID").doc("00003").collection("DATA")
-      .get()  
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-            var date = doc.data().DATE;
-            var sid = doc.data().SID;
-            var wbc = doc.data().WBC;
-            var rbc = doc.data().RBC;
-            var hgb = doc.data().HGB;
-            var mch = doc.data().MCH;
-            var mcv = doc.data().MCV;
-            var pdw = doc.data().PDW;
-            var hct = doc.data().HCT;
-            var lym = doc.data().LYM;
-            var plt = doc.data().PLT;
-            var gra = doc.data().GRA;
-            var fname = doc.data().FirstName;
-            var lname = doc.data().LastName;
-            document.getElementById('date3').innerHTML += date;
-            document.getElementById('sid3').innerHTML += sid;
-            document.getElementById('wbc3').innerHTML += wbc;
-            document.getElementById('rbc3').innerText += rbc;
-            document.getElementById('mch3').innerHTML += mch;
-            document.getElementById('mcv3').innerHTML += mcv;
-            document.getElementById('hgb3').innerHTML += hgb;
-            document.getElementById('pdw3').innerHTML += pdw;
-            document.getElementById('hct3').innerHTML += hct;
-            document.getElementById('lym3').innerHTML += lym;
-            document.getElementById('plt3').innerHTML += plt;
-            document.getElementById('gra3').innerHTML += gra;
-            document.getElementById('fname3').innerHTML += fname;
-            document.getElementById('lname3').innerHTML += lname;
-        });
-      })
-      .catch(err => {
-        console.log('Error getting documents', err);
-      });
-      //-----------------------Card4---------------------------------//
-      db.collection("patientvalues").doc(username).collection("DATE").doc("23-05-2021").collection("SID").doc("00003").collection("DATA")
-      .get()  
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-            var date = doc.data().DATE;
-            var sid = doc.data().SID;
-            var wbc = doc.data().WBC;
-            var rbc = doc.data().RBC;
-            var hgb = doc.data().HGB;
-            var mch = doc.data().MCH;
-            var mcv = doc.data().MCV;
-            var pdw = doc.data().PDW;
-            var hct = doc.data().HCT;
-            var lym = doc.data().LYM;
-            var plt = doc.data().PLT;
-            var gra = doc.data().GRA;
-            var fname = doc.data().FirstName;
-            var lname = doc.data().LastName;
-            document.getElementById('date4').innerHTML += date;
-            document.getElementById('sid4').innerHTML += sid;
-            document.getElementById('wbc4').innerHTML += wbc;
-            document.getElementById('rbc4').innerHTML += rbc;
-            document.getElementById('mch4').innerHTML += mch;
-            document.getElementById('mcv4').innerHTML += mcv;
-            document.getElementById('hgb4').innerHTML += hgb;
-            document.getElementById('pdw4').innerHTML += pdw;
-            document.getElementById('hct4').innerHTML += hct;
-            document.getElementById('lym4').innerHTML += lym;
-            document.getElementById('plt4').innerHTML += plt;
-            document.getElementById('gra4').innerHTML += gra;
-            document.getElementById('fname4').innerHTML += fname;
-            document.getElementById('lname4').innerHTML += lname;
-        
-        });
-   
-      })
-      .catch(err => {
-        
-        console.log('Error getting documents', err);
-     
-      });
+  })
+
 
     })
     $(document).ready(function(){

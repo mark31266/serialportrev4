@@ -1,4 +1,4 @@
-           //--------------DATA----------------------//
+          //--------------DATA----------------------//
            var DATEinput = document.getElementById('DATE'); 
            var TIMEinput = document.getElementById('timeinputs'); 
            var SIDinput = document.getElementById('SID'); 
@@ -79,8 +79,10 @@
                 var date2 = document.getElementById("date");  
                 var clock1 = document.getElementById("clock");  
                 var machinename = document.getElementById("machinename").innerHTML; 
-              
-             
+                var timestamp1 = date2.innerText + " " + clock1.innerText; 
+                var myimg = document.getElementById("signatories1"); 
+                var myimg2 = document.getElementById("logo1"); 
+                var myimg3 = document.getElementById("header1"); 
                 console.log(String(date2.innerText)) 
                 function Update(val,type) 
                 {
@@ -99,7 +101,9 @@
                  measurementId: "G-NHM4EMZ8HS"
                };
                // Initialize Firebase
+    
                firebase.initializeApp(firebaseConfig);
+             
                firebase.firestore().enablePersistence()
                .catch((err) => {
                    if (err.code == 'failed-precondition') {
@@ -129,7 +133,8 @@
                 var user = firebase.auth().currentUser;
                 idSTRING = user.email;
                 console.log(idSTRING); 
-            
+                
+
                
              //-----------------------------------------String to Date Function-------------------------------//
              
@@ -140,7 +145,7 @@
                var doc = db.collection("patientvalues").doc(idSTRING + " Mythic 22").collection("DATE").doc(DATEinput.innerText).collection("SID").doc(SIDinput.innerText);
                doc.get().then((docSnapshot) => {
                  if (docSnapshot.exists) {
-                   alert("Data Exists in the Database"); 
+                  $('#myModal1').modal('show');
                    // window.location.reload(); 
                  } else {
                    // document does not exist (only on online)
@@ -158,8 +163,38 @@
                      {
                        id : idSTRING
                      })
-               
-                 db.collection("patientvalues").doc(idSTRING + " Mythic 22").collection("DATE").doc(DATEinput.innerText).collection("SID").doc(SIDinput.innerText).collection("DATA").add(
+                    
+                     db.collection("Timestamp").doc("Counting").get().then((doc) => {
+                       var count1 = doc.data().counting; 
+                      if (count1 == "0") 
+                     {
+                      db.collection("Timestamp").doc("Constant").set(
+                        {
+                          dateran : date2.innerText + " " + clock1.innerText,
+                          date : DATEinput.innerText,
+                          sid : SIDinput.innerText
+                        })
+                        db.collection("Timestamp").doc("Counting").set(
+                          {
+                            counting : "1"  
+                          })
+                     }
+                     else if (count1 == "1") 
+                     {
+                      db.collection("Timestamp").doc("Counting").set(
+                        {
+                          counting : "0"  
+                        })
+                      db.collection("Timestamp").doc("Constant2").set(
+                        {
+                          dateran : date2.innerText + " " + clock1.innerText,
+                          date : DATEinput.innerText,
+                          sid : SIDinput.innerText,
+                        })
+                     }
+                     })
+                 db.collection("patientvalues").doc(idSTRING + " Mythic 22").collection("DATE")
+                 .doc(DATEinput.innerText).collection("SID").doc(SIDinput.innerText).collection("DATA").add(
                    {
                    /**WBC**/
                    WBC : th_wbc.innerHTML,
@@ -240,11 +275,11 @@
                    barcode : DATEinput.innerText + " "  + SIDinput.innerText
                    }).then(function (){
                  
-                     alert("Data Written! " + "SID: " + SIDinput.innerText); 
+                     console.log("Data Written! " + "SID: " + SIDinput.innerText); 
                      // window.location.reload(); 
                  }).catch(function(error)
                  {
-                   alert("Error Writing Document" + error);
+                   console.log("Error Writing Document" + error);
                  }); 
                }
                
@@ -473,7 +508,8 @@
                  if (fn !== null && fn.value === "" || ln !== null && ln.value === "" || an !== null && an.value === "" || gn !== null && gn.value === "" || pn !== null && pn.value === "" || bn !== null && bn.value === "" )
                  {
                    socket.close(); 
-                   alert("Missing Details\r\nPlease fill out the field/s and press submit")
+                   $('#myModal').modal('show');
+                  //  alert("Missing Details\r\nPlease fill out the field/s and press submit")
                  }
                  else{
                    bnn2.innerHTML += "<b>" + bnn1.value + "</b>"; 
@@ -487,7 +523,35 @@
                                   height: 50
                   })
                   window.print(); 
-       
+                  db.collection("Timestamp").doc("Counting").get().then((doc) => {
+                    var count1 = doc.data().counting; 
+                   if (count1 == "0") 
+                  {
+                   db.collection("Timestamp").doc("Constant").set(
+                     {
+                       dateran : date2.innerText + " " + clock1.innerText,
+                       date : DATEinput.innerText,
+                       sid : SIDinput.innerText
+                     })
+                     db.collection("Timestamp").doc("Counting").set(
+                       {
+                         counting : "1"  
+                       })
+                  }
+                  else if (count1 == "1") 
+                  {
+                   db.collection("Timestamp").doc("Counting").set(
+                     {
+                       counting : "0"  
+                     })
+                   db.collection("Timestamp").doc("Constant2").set(
+                     {
+                       dateran : date2.innerText + " " + clock1.innerText,
+                       date : DATEinput.innerText,
+                       sid : SIDinput.innerText,
+                     })
+                  }
+                  })
                   db.collection("auditlog").doc(date2.innerText + " " + clock1.innerText).set(
                     {
                     id : idSTRING,
@@ -516,7 +580,8 @@
              let bnn2 = document.getElementById('th_blood'); 
              if (fn !== null && fn.value === "" || ln !== null && ln.value === "" || an !== null && an.value === "" || gn !== null && gn.value === "" || pn !== null && pn.value === "" || bn !== null && bn.value === "" )
              {    
-               alert("Missing Details\r\nPlease fill out the field/s and press submit")
+              //  alert("Missing Details\r\nPlease fill out the field/s and press submit")
+               $('#myModal').modal('show');
            
              }
              else{
@@ -531,6 +596,35 @@
                               height: 50
               })
               window.print(); 
+              db.collection("Timestamp").doc("Counting").get().then((doc) => {
+                var count1 = doc.data().counting; 
+               if (count1 == "0") 
+              {
+               db.collection("Timestamp").doc("Constant").set(
+                 {
+                   dateran : date2.innerText + " " + clock1.innerText,
+                   date : DATEinput.innerText,
+                   sid : SIDinput.innerText
+                 })
+                 db.collection("Timestamp").doc("Counting").set(
+                   {
+                     counting : "1"  
+                   })
+              }
+              else if (count1 == "1") 
+              {
+               db.collection("Timestamp").doc("Counting").set(
+                 {
+                   counting : "0"  
+                 })
+               db.collection("Timestamp").doc("Constant2").set(
+                 {
+                   dateran : date2.innerText + " " + clock1.innerText,
+                   date : DATEinput.innerText,
+                   sid : SIDinput.innerText,
+                 })
+              }
+              })
               db.collection("auditlog").doc(date2.innerText + " " + clock1.innerText).set(
                 {
                 id : idSTRING,
@@ -766,7 +860,81 @@
                
       
 }); 
-
+function dataonload() {
+  //Automatic Image Data (Signatories)!!
+  var docRef = db.collection("Images").doc("signatories.png");
+docRef.get().then((doc) => {
+    if (doc.exists) {
+       myimg.src = doc.data().ImageURL; 
+       console.log("Signatories Present")
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch((error) => {
+    console.log("Error getting document:", error);
+});
+//Automatic Image Data (Logo)!!
+var docRef = db.collection("Images").doc("logo.png");
+docRef.get().then((doc) => {
+    if (doc.exists) {
+       myimg2.src = doc.data().ImageURL; 
+       console.log("Logo Present")
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch((error) => {
+    console.log("Error getting document:", error);
+});
+//Automatic Image Data (Header)!!
+var docRef = db.collection("Images").doc("header.png");
+docRef.get().then((doc) => {
+    if (doc.exists) {
+       myimg3.src = doc.data().ImageURL; 
+       console.log("Header Present")
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch((error) => {
+    console.log("Error getting document:", error);
+});
+}
 function printfunction() {
   window.print();
 }
+
+var socket = io();
+socket.on('status', function(status) {
+  console.log(status);
+  if (String(status).includes("COM1") ){
+   machinename = "Orphee Mythic 22"; 
+     //SelectPicker Nav
+   const navobj = document.createElement("li");
+   const navobj2 = document.createElement("a");
+   navobj2.textContent = "Mythic 22";
+   navobj2.href = "/myth22/run"; 
+   navobj.appendChild(navobj2)
+   document.getElementById("homeSubmenu1").appendChild(navobj);
+  }
+  if (String(status).includes("COM2") ){
+    machinename = "Orphee Mythic 18"; 
+    const navobj = document.createElement("li");
+    const navobj2 = document.createElement("a");
+    navobj2.textContent = "Mythic 18";
+    navobj2.href = "/myth18/run"; 
+    navobj.appendChild(navobj2)
+    document.getElementById("homeSubmenu1").appendChild(navobj);
+   }
+   if (String(status).includes("COM3") ){
+    machinename = "Orphee Mythic 60"; 
+    const navobj = document.createElement("li");
+    const navobj2 = document.createElement("a");
+    navobj2.textContent = "Mythic 22";
+    navobj2.href = "/myth60/run"; 
+    navobj.appendChild(navobj2)
+    document.getElementById("homeSubmenu1").appendChild(navobj);
+   }
+  socket.close();
+});
